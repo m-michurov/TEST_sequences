@@ -5,53 +5,11 @@
 
 typedef int bool;
 
-
 typedef struct {
     int * array;
     size_t size;
 } IntArray;
 
-
-int ** divide(
-        int * array,
-        size_t size,
-        int (* check)(int))
-{
-    size_t s_pos = 0;
-    size_t ns_pos = 0;
-
-    int ** new_arr = (int **) malloc(4 * sizeof(int *));
-    MEM_CHECK(new_arr)
-
-    new_arr[0] = (int *) malloc(size * sizeof(int));
-    new_arr[1] = (int *) malloc(sizeof(int));
-
-    new_arr[2] = (int *) malloc(size * sizeof(int));
-    new_arr[3] = (int *) malloc(sizeof(int));
-
-    MEM_CHECK(new_arr[0])
-    MEM_CHECK(new_arr[1])
-    MEM_CHECK(new_arr[2])
-    MEM_CHECK(new_arr[3])
-
-    for (size_t k = 0; k < size; k++) {
-        if (check(array[k]))
-            new_arr[0][s_pos++] = array[k];
-        else
-            new_arr[2][ns_pos++] = array[k];
-    }
-
-    new_arr[0] = realloc(new_arr[0], s_pos * sizeof(int));
-    new_arr[2] = realloc(new_arr[2], ns_pos * sizeof(int));
-
-    MEM_CHECK(new_arr[0])
-    MEM_CHECK(new_arr[2])
-
-    *new_arr[1] = (int)s_pos;
-    *new_arr[3] = (int)ns_pos;
-
-    return new_arr;
-}
 
 int check(
         int c)
